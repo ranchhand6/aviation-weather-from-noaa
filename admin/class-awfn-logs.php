@@ -7,10 +7,14 @@
  */
 class AWFNLogs {
 	private $awfn_logs_options;
+	private $now;
 
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'awfn_logs_add_plugin_page' ) );
 		add_action( 'admin_init', array( $this, 'awfn_logs_page_init' ) );
+		$time = getdate();
+//		var_dump( $time );
+		$this->now = date( 'Y-m-d H:i:s' );
 	}
 
 	public function awfn_logs_add_plugin_page() {
@@ -39,14 +43,17 @@ class AWFNLogs {
 				<?php
 				settings_fields( 'awfn_logs_option_group' );
 				do_settings_sections( 'awfn-logs-admin' );
-				submit_button();
+				submit_button('Save Setting');
 				?>
 			</form>
 			<hr />
 			<?php if( $debug_0 ) : ?>
-			<h2><?php _e( 'Logs', Adds_Weather_Widget::get_widget_slug() ); ?></h2>
-			<?php settings_errors(); ?>
 
+			<h2><?php _e( 'Logs', Adds_Weather_Widget::get_widget_slug() ); ?></h2>
+				<p><?php printf( __( 'Current Local Time %s', Adds_Weather_Widget::get_widget_slug() ), current_time( 'Y-m-d H:i:s' ) ); ?></p>
+				<p><?php printf( __( 'Current Server Time %s', Adds_Weather_Widget::get_widget_slug() ), $this->now ); ?></p>
+				<button id="awfn-clear-all"><?php _e( 'Clear All Logs', Adds_Weather_Widget::get_widget_slug() ); ?></button>
+			<?php settings_errors(); ?>
 			<?php $this->display_log(); ?>
 
 			<?php endif; ?>
@@ -65,9 +72,10 @@ class AWFNLogs {
 			foreach ( $files as $key => $filename ) {
 
 				echo '<h2>' . strtoupper( basename( $filename ) ) . '</h2>';
-				echo '<section id="' . basename( $filename ) . '">';
+				echo '<section id="' . basename( $filename ) . '" class="awfn-log-display">';
 
 				if ( 0 < filesize( $filename ) ) {
+
 					echo '<button class="awfn-clear-log" data-file="' . $filename . '">' . __( 'Clear Log', Adds_Weather_Widget::get_widget_slug() ) . '</button>';
 					echo '<div class="errors">';
 				} else {
@@ -139,6 +147,21 @@ class AWFNLogs {
 		);
 	}
 
+	public static function clear_all_logs() {
+		check_ajax_referer( 'awfn_clear_logs', 'secure' );
+
+		$files = self::get_log_files();
+		foreach ( $files as $filename ) {
+			$handle = fopen( $filename, 'w' );
+			if ( $handle ) {
+				fwrite( $handle, 'Log cleared ' . current_time( 'mysql' ) . "\n" );
+				fclose( $handle );
+			}
+		}
+
+		wp_send_json_success( 'ALL CLEARED' );
+	}
+
 	/**
 	 * AJAX call to clear log files
 	 */
@@ -147,9 +170,11 @@ class AWFNLogs {
 
 		$filename = $_POST['file'];
 
-		$handle = fopen( $filename, 'r+' );
+		$handle = fopen( $filename, 'w' );
 		if ( $handle ) {
-			ftruncate( $handle, 0 );
+//			ftruncate( $handle, 0 );
+			$time = current_time( 'mysql' );
+			fwrite( $handle, 'Log cleared ' . $time . "\n" );
 			fclose( $handle );
 		}
 

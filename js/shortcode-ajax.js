@@ -22,6 +22,8 @@
                 success : function( resp ) {
                     if ( awfn_debug ) {
                         console.log( 'shortcode ajax success' );
+                        console.log( resp );
+                        console.log( resp.data );
                     }
                     $this.html(resp.data);
                 },

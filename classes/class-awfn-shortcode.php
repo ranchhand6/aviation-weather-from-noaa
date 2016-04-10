@@ -37,13 +37,13 @@ class AWFN_Shortcode {
 
 		$atts = wp_parse_args( $atts, $defaults );
 
-		$hours             = absint( $atts['hours'] ) <= 6 ? absint( $atts['hours'] ) : 1;
-		$show_metar        = (bool) $atts['show_metar'];
-		$show_taf          = (bool) $atts['show_taf'];
-		$show_pireps       = (bool) $atts['show_pireps'];
-		$show_station_info = (bool) $atts['show_station_info'];
-		$distance          = absint( $atts['radial_dist'] );
-		$title             = $atts['title'];
+//		$hours             = absint( $atts['hours'] ) <= 6 ? absint( $atts['hours'] ) : 1;
+//		$show_metar        = (bool) $atts['show_metar'];
+//		$show_taf          = (bool) $atts['show_taf'];
+//		$show_pireps       = (bool) $atts['show_pireps'];
+//		$show_station_info = (bool) $atts['show_station_info'];
+//		$distance          = absint( $atts['radial_dist'] );
+//		$title             = $atts['title'];
 
 		$spinner_url     = plugin_dir_url( dirname( __FILE__ ) ) . 'css/loading.gif';
 		$atts['spinner'] = $spinner_url;
@@ -57,8 +57,18 @@ class AWFN_Shortcode {
 	public static function ajax_weather_shortcode() {
 
 		check_ajax_referer( 'shortcode-ajax', 'security' );
+		Adds_Weather_Widget::log('debug', 'AJAX checked: ' . __FUNCTION__ );
 
 		$atts  = $_POST['atts'];
+
+		// The same shortcode can be used multiple times while being cached once based on its attributes
+		$shortcode_id = SHORTCODE_SLUG . md5( serialize( $atts ) );
+
+		// Check for cached output
+		if ( $output = get_transient( $shortcode_id ) ) {
+			Adds_Weather_Widget::log( 'info', 'Cached data found for shortcode id: ' . $shortcode_id );
+			wp_send_json_success( $output );
+		}
 
 		$hours             = absint( $atts['hours'] ) <= 6 ? absint( $atts['hours'] ) : 1;
 		$show_metar        = filter_var( $atts['show_metar'], FILTER_VALIDATE_BOOLEAN );
@@ -73,14 +83,7 @@ class AWFN_Shortcode {
 
 		$icao = $station->station_exist() ? (string) $station->get_icao() : false;
 
-		// The same shortcode can be used multiple times while being cached once based on its attributes
-		$shortcode_id = SHORTCODE_SLUG . md5( serialize( $atts ) );
 
-		// Check for cached output
-		if ( $output = get_transient( $shortcode_id ) ) {
-			Adds_Weather_Widget::log( 'info', 'Cached data found for shortcode id: ' . $shortcode_id );
-			wp_send_json_success( $output );
-		}
 
 		Adds_Weather_Widget::log( 'info', 'No cached data found for shortcode id: ' . $shortcode_id );
 

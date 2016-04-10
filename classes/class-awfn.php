@@ -21,6 +21,7 @@ abstract class Awfn {
 	protected $station = false;
 	protected $icao = false;
 	protected $show;
+	protected $base_url;
 	protected $url;
 	protected $data = false;
 	protected $display_data = false;
@@ -111,7 +112,14 @@ abstract class Awfn {
 	 */
 	public function go( $display = true ) {
 
+		if ( $display ) {
+			$this->maybelog('info', 'go(true)' );
+		} else {
+			$this->maybelog('info', 'go(false)' );
+		}
+
 		if ( $this->load_xml() ) {
+			$this->maybelog('debug', 'load_xml() returned true' );
 
 			$this->decode_data();
 			$this->build_display();
@@ -164,7 +172,7 @@ abstract class Awfn {
 	/**
 	 * Retrieves XML data using URL provided by subclass and returns array converted from simplexmlelement
 	 *
-	 * SimpleXMLElement is returned to AwfnPirep without conversion for iteration
+	 *
 	 *
 	 * @since 0.4.0
 	 */
@@ -172,28 +180,34 @@ abstract class Awfn {
 
 		try {
 			$xml_raw = wp_remote_get( esc_url_raw( $this->url ) );
+			$this->maybelog('debug', '$this->url:' );
+			$this->maybelog( 'debug', $this->url );
 			if ( is_wp_error( $xml_raw ) ) {
-				$this->maybelog( 'debug', $xml_raw->get_error_message() );
+				$this->maybelog( 'debug', $xml_raw->get_error_message() . __LINE__ );
 				$this->xmlData = false;
 
 				return false;
 			}
 		} catch ( Exception $e ) {
-			$this->maybelog( 'warning', $e->getMessage() );
+			$this->maybelog( 'warning', $e->getMessage() . __LINE__ );
 
 			return false;
 		}
 
 		try {
 			$body = wp_remote_retrieve_body( $xml_raw );
+
+			$this->maybelog( 'debug', '$xml_raw:' );
+			$this->maybelog( 'debug', $xml_raw );
+			$this->maybelog( 'debug', '$body:' );
+			$this->maybelog( 'debug', $body );
 			if ( '' === $body || strpos( $body, '<!DOCTYPE' ) ) {
-				$this->maybelog( 'debug', $xml_raw );
-				$this->maybelog( 'debug', $body );
+
 
 				return false;
 			}
 		} catch ( Exception $e ) {
-			$this->maybelog( 'warning', $e->getMessage() );
+			$this->maybelog( 'warning', $e->getMessage() . __LINE__ );
 
 			return false;
 		}
@@ -206,7 +220,7 @@ abstract class Awfn {
 				return false;
 			}
 		} catch ( Exception $e ) {
-			$this->maybelog( 'warning', $e->getMessage() );
+			$this->maybelog( 'warning', $e->getMessage() . __LINE__ );
 
 			return false;
 		}
@@ -214,7 +228,7 @@ abstract class Awfn {
 		try {
 			$atts = $loaded->data->attributes();
 		} catch ( Exception $e ) {
-			$this->maybelog( 'warning', $e->getMessage() );
+			$this->maybelog( 'warning', $e->getMessage() . __LINE__ );
 
 			return false;
 		}
@@ -228,7 +242,7 @@ abstract class Awfn {
 
 		$this->maybelog( 'debug', 'No xml loaded for ' . $this->icao );
 
-		return false; // testing
+		return false;
 
 	}
 

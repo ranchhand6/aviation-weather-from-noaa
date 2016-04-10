@@ -22,8 +22,14 @@
                 success : function( resp ) {
                     if ( awfn_debug ) {
                         console.log( 'widget ajax success' );
+                        console.log($this);
+                        console.log(resp.data);
                     }
-                    $this.html(resp.data);
+                    if ( undefined == resp.data ) {
+                        $this.html(resp);
+                    } else {
+                        $this.html( resp.data );
+                    }
                 },
                 error : function( x ) {
                     if ( awfn_debug ) {

@@ -48,6 +48,7 @@ class AwfnMetar extends Awfn {
 
 		if ( $this->xmlData ) {
 			$this->data = (string) $this->xmlData->raw_text;
+			$this->maybelog( 'debug', 'Ready to decode: ' . $this->data );
 			$this->decode_metar();
 		} else {  // Should never get to this point
 			$this->maybelog( 'debug', 'No metar data returned for ' . $this->icao );
@@ -63,6 +64,7 @@ class AwfnMetar extends Awfn {
 		$decoder = new MetarDecoder();
 		$d       = $decoder->parse( $this->data );
 		if ( $d->isValid() ) {
+			$this->maybelog( 'debug', 'Data to decode is valid' );
 			$time                 = $d->getTime();
 			$sw                   = $d->getSurfaceWind();
 			$wind                 = $sw->getMeanDirection();
@@ -100,7 +102,7 @@ class AwfnMetar extends Awfn {
 <p>Pressure: {$pressure} {$pressure_unit}</p>
 MAC;
 
-
+			$this->maybelog( 'debug', 'Decoded: ' . $this->decoded );
 		} else {
 			$this->decoded = false;
 			$this->maybelog( 'debug', 'Invalid METAR for ' . $this->icao );
@@ -114,15 +116,19 @@ MAC;
 	 * @since 0.4.0
 	 */
 	public function build_display() {
+		$this->maybelog( 'debug', 'Inside build_display() ' . __FILE__ . ':' . __LINE__ );
 
 		if ( $this->data ) {
+			$this->maybelog( 'debug', 'We have data to build display' );
 			$this->display_data = '<header>METAR<span class="fa fa-sort-desc"></span></header><article class="metar">'
 			                      . esc_html( $this->data ) .
 			                      '</article>';
 			if ( $this->decoded ) {
+				$this->maybelog( 'debug', 'Our decoded data for display: ' . $this->decoded );
 				$this->display_data .= '<article class="decoded-metar">' . $this->decoded . '</article>';
 			}
 		} else {
+			$this->maybelog( 'debug', 'We have to data to display' );
 			$this->display_data = '<article class="metar">' . __( 'No METAR returned', Adds_Weather_Widget::get_widget_slug() )
 			                      . '</article>';
 		}

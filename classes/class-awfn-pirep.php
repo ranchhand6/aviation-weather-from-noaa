@@ -27,6 +27,7 @@ class AwfnPirep extends Awfn {
 	 */
 	public function __construct( $icao = '', $lat, $lng, $distance = 100, $hours = 2, $show = true ) {
 
+
 		self::$log_name = 'AircraftReport';
 
 		parent::__construct();
@@ -38,7 +39,7 @@ class AwfnPirep extends Awfn {
 		$base .= '&format=xml&radialDistance=%d;%f,%f&hoursBeforeNow=%d';
 		$this->url = sprintf( $base, $distance, $lng, $lat, $hours );
 
-		$this->maybelog('info', 'New PIREP for ' . $icao );
+		$this->maybelog( 'info', 'New for ' . $icao );
 
 	}
 
@@ -50,13 +51,14 @@ class AwfnPirep extends Awfn {
 	 * @since 0.4.0
 	 */
 	public function decode_data() {
-
-		if ( $this->xmlData->raw_text ) {
+		$this->maybelog( 'debug', 'decode_data()' );
+		if ( $this->xmlData ) {
+			$this->maybelog( 'debug', 'We have data with count ' . count( $this->xmlData ) . ' ' . __FUNCTION__ );
 			foreach ( $this->xmlData as $report ) {
 				$this->data[] = (string) $report->raw_text;
 			}
 		} else { // This should never be called
-			$this->maybelog( 'warning', 'No pirep data for ' . $this->icao );
+			$this->maybelog( 'warning', 'No data found for ' . $this->icao );
 		}
 	}
 
@@ -66,11 +68,12 @@ class AwfnPirep extends Awfn {
 	 * @since 0.4.0
 	 */
 	public function build_display() {
+		$this->maybelog( 'debug', 'build_display()' );
 
 		if ( $this->data ) {
 
 			$count = count( $this->data );
-
+			$this->maybelog( 'debug', 'We have data with count ' . $count . ' ' . __FUNCTION__ );
 			$count_display = sprintf( '<span class="awfn-min">(%d)</span>', $count );
 			$this->maybelog( 'debug', 'Pirep count for ' . $this->icao . ': ' . $count, __LINE__ );
 

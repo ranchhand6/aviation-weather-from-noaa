@@ -31,6 +31,8 @@ class AwfnTaf extends Awfn {
 		$this->icao  = $icao;
 		$this->hours = $hours;
 		$this->show  = $show;
+
+		$this->maybelog( 'info', 'New for ' . $this->icao );
 	}
 
 	/**
@@ -39,11 +41,12 @@ class AwfnTaf extends Awfn {
 	 * @since 0.4.0
 	 */
 	public function decode_data() {
-
+		$this->maybelog( 'debug', 'decod_data()' );
 		if ( $this->xmlData ) {
+			$this->maybelog( 'debug', 'We have xmlData' );
 			$this->data = (string) $this->xmlData->raw_text;
 		} else { // Should never get to this point
-			$this->maybelog( 'debug', 'No taf data found for ' . $this->icao );
+			$this->maybelog( 'debug', 'No data found for ' . $this->icao );
 		}
 	}
 
@@ -53,12 +56,14 @@ class AwfnTaf extends Awfn {
 	 * @since 0.4.0
 	 */
 	public function build_display() {
+		$this->maybelog( 'debug', 'build_display()' );
 		if ( $this->data ) {
+			$this->maybelog( 'debug', 'We have data: ' . $this->data );
 			$this->display_data = '<header>TAF</header><article class="taf">' . esc_html( $this->data )
 			                      . '</article>';
 		} else {
 			$this->display_data = '<article class="taf">No TAF returned</article>';
-			$this->maybelog( 'debug', 'No TAF returned for ' . $this->icao . '/' . $this->hours . ' hours', null );
+			$this->maybelog( 'debug', 'No data returned for ' . $this->icao . '/' . $this->hours . ' hours', null );
 		}
 	}
 

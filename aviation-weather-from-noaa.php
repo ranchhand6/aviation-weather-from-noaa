@@ -112,6 +112,7 @@ class Adds_Weather_Widget extends WP_Widget {
 		add_action( 'wp_ajax_weather_widget', array( 'Adds_Weather_Widget', 'ajax_weather_widget' ) );
 		add_action( 'wp_ajax_nopriv_weather_widget', array( 'Adds_Weather_Widget', 'ajax_weather_widget' ) );
 		add_action( 'wp_ajax_awfn_clear_log', array( 'AWFNLogs', 'clear_log' ) );
+		add_action( 'wp_ajax_awfn_clear_all_logs', array( 'AWFNLogs', 'clear_all_logs' ) );
 
 		// Hooks fired when the Widget is activated and deactivated
 		register_activation_hook( __FILE__, array( $this, 'activate' ) );
@@ -201,6 +202,7 @@ class Adds_Weather_Widget extends WP_Widget {
 	public static function ajax_weather_widget() {
 
 		check_ajax_referer( 'widget-ajax', 'security' );
+		self::log( 'debug', 'AJAX checked: ' . __FUNCTION__ );
 
 		// Coming from our jQuery/AJAX POST
 		$instance = $_POST['instance'];
@@ -217,7 +219,7 @@ class Adds_Weather_Widget extends WP_Widget {
 		$cache = get_transient( $widget_id );
 
 		if ( $cache ) {
-			self::log( 'info', 'Cached data found for ' . $widget_id );
+			self::log( 'info', 'Cached data found for widget id: ' . $widget_id );
 			// If we have good cached data, use it.
 			wp_send_json_success( $cache );
 		}
@@ -225,13 +227,17 @@ class Adds_Weather_Widget extends WP_Widget {
 		self::log( 'info', 'No cached data found for ' . $widget_id );
 
 		$station = new AwfnStation( $instance['icao'], $show_station_info );
-		$icao    = $station->station_exist() ? (string) $station->get_icao() : false;
-		$title   = empty( $instance['title'] ) ? sprintf( _n( 'Available data for %s from the past hour',
+		self::log( 'debug', 'Widget created new station for ' . $instance['icao'] );
+
+		$icao  = $station->station_exist() ? (string) $station->get_icao() : false;
+		$title = empty( $instance['title'] ) ? sprintf( _n( 'Available data for %s from the past hour',
 			'Available data for %s from the past %d hours', $hours, self::get_widget_slug() ), $icao,
 			$hours ) : $instance['title'];
 
 		// No point going any further without ICAO
 		if ( ! $icao ) {
+			self::log( 'debug', '! $icao' );
+
 			return;
 		}
 
@@ -241,11 +247,14 @@ class Adds_Weather_Widget extends WP_Widget {
 
 
 		if ( $station->station_exist() ) {
+			self::log( 'debug', 'station exists: ' . $icao );
 			echo '<header>' . esc_html( $title ) . '</header>';
 
 			$station->decode_data();
 			$station->build_display();
 			$station->display_data();
+			$lat = $station->lat();
+			$lng = $station->lng();
 
 			$metar = new AwfnMetar( $icao, $hours, $show_metar );
 			$metar->go();
@@ -253,7 +262,20 @@ class Adds_Weather_Widget extends WP_Widget {
 			$taf = new AwfnTaf( $icao, $hours, $show_taf );
 			$taf->go();
 
-			$pirep = new AwfnPirep( $station->get_icao(), $station->lat(), $station->lng(), $distance, $hours, $show_pireps );
+			self::log( 'debug', 'Station data for AwfnPirep' );
+			$station_class = get_class( $station );
+			self::log( 'debug', '$station is: ' . $station_class );
+			self::log( 'debug', 'icao: ' . $icao );
+			self::log( 'debug', 'lat: ' . $lat );
+			self::log( 'debug', 'lng: ' . $lng );
+			self::log( 'debug', 'distance: ' . $distance );
+			self::log( 'debug', 'hours: ' . $hours );
+			if ( $show_pireps ) {
+				self::log( 'debug', 'show: true' );
+			} else {
+				self::log( 'debug', 'show: false' );
+			}
+			$pirep = new AwfnPirep( $icao, $lat, $lng, $distance, $hours, $show_pireps );
 			$pirep->go();
 		} else {
 			echo '<header class="awfn-no-station">ICAO ' . esc_html( $icao ) . ' not found.</header>';
@@ -261,7 +283,14 @@ class Adds_Weather_Widget extends WP_Widget {
 
 		$widget_string .= ob_get_clean();
 
-		set_transient( $widget_id, $widget_string, EXPIRE_TIME );
+		if ( set_transient( $widget_id, $widget_string, EXPIRE_TIME ) ) {
+			self::log( 'debug', 'transient should be set for ' . $widget_id );
+		} else {
+			self:: log( 'debug', 'transient was not set for ' . $widget_id );
+		}
+
+		self::log( 'debug', 'Widget String:' );
+		self::log( 'debug', $widget_string );
 
 		wp_send_json_success( $widget_string );
 
@@ -502,11 +531,11 @@ class Adds_Weather_Widget extends WP_Widget {
 		if ( $debug_0 ) {
 			$logger = self::get_logger();
 //			if ( null !== $logger ) {
-				if ( is_array( $msg ) ) {
-					$logger->$severity( print_r( $msg ) );
-				} else {
-					$logger->$severity( $msg );
-				}
+			if ( is_array( $msg ) || is_object( $msg ) ) {
+				$logger->$severity( print_r( $msg, true ) );
+			} else {
+				$logger->$severity( $msg );
+			}
 //			}
 		}
 	}
