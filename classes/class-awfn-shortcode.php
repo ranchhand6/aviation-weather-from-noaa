@@ -107,16 +107,22 @@ class AWFN_Shortcode {
 			$station->display_data();
 
 			// Handle METAR
-			$metar = new AwfnMetar( $icao, $hours, $show_metar );
-			$metar->go();
+			if ( $show_metar ) {
+				$metar = new AwfnMetar( $icao, $hours, $show_metar );
+				$metar->go();
+			}
 
 			// Handle TAF
-			$taf = new AwfnTaf( $icao, $hours, $show_taf );
-			$taf->go();
+			if ( $show_taf ) {
+				$taf = new AwfnTaf( $icao, $hours, $show_taf );
+				$taf->go();
+			}
 
 			// Handle PIREPS
-			$pirep = new AwfnPirep( $station->get_icao(), $station->lat(), $station->lng(), $distance, $hours, $show_pireps );
-			$pirep->go();
+			if ( $show_pireps ) {
+				$pirep = new AwfnPirep( $station->get_icao(), $station->lat(), $station->lng(), $distance, $hours, $show_pireps );
+				$pirep->go();
+			}
 
 		} else {
 			// We have no station data; say so.

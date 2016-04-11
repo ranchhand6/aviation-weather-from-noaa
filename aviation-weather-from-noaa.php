@@ -256,11 +256,15 @@ class Adds_Weather_Widget extends WP_Widget {
 			$lat = $station->lat();
 			$lng = $station->lng();
 
-			$metar = new AwfnMetar( $icao, $hours, $show_metar );
-			$metar->go();
+			if ( $show_metar ) {
+				$metar = new AwfnMetar( $icao, $hours, $show_metar );
+				$metar->go();
+			}
 
-			$taf = new AwfnTaf( $icao, $hours, $show_taf );
-			$taf->go();
+			if ( $show_taf ) {
+				$taf = new AwfnTaf( $icao, $hours, $show_taf );
+				$taf->go();
+			}
 
 			self::log( 'debug', 'Station data for AwfnPirep' );
 			$station_class = get_class( $station );
@@ -271,12 +275,13 @@ class Adds_Weather_Widget extends WP_Widget {
 			self::log( 'debug', 'distance: ' . $distance );
 			self::log( 'debug', 'hours: ' . $hours );
 			if ( $show_pireps ) {
-				self::log( 'debug', 'show: true' );
+				self::log( 'debug', 'show pireps: true' );
+				$pirep = new AwfnPirep( $icao, $lat, $lng, $distance, $hours, $show_pireps );
+				$pirep->go();
 			} else {
-				self::log( 'debug', 'show: false' );
+				self::log( 'debug', 'show pireps: false' );
 			}
-			$pirep = new AwfnPirep( $icao, $lat, $lng, $distance, $hours, $show_pireps );
-			$pirep->go();
+
 		} else {
 			echo '<header class="awfn-no-station">ICAO ' . esc_html( $icao ) . ' not found.</header>';
 		}

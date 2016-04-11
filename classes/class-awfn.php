@@ -180,16 +180,16 @@ abstract class Awfn {
 
 		try {
 			$xml_raw = wp_remote_get( esc_url_raw( $this->url ) );
-			$this->maybelog('debug', '$this->url:' );
+			$this->maybelog('debug', '$this->url: ' . __FUNCTION__ . ':' . __LINE__ );
 			$this->maybelog( 'debug', $this->url );
 			if ( is_wp_error( $xml_raw ) ) {
-				$this->maybelog( 'debug', $xml_raw->get_error_message() . __LINE__ );
+				$this->maybelog( 'debug', $xml_raw->get_error_message() . ':' . __LINE__ );
 				$this->xmlData = false;
 
 				return false;
 			}
 		} catch ( Exception $e ) {
-			$this->maybelog( 'warning', $e->getMessage() . __LINE__ );
+			$this->maybelog( 'warning', $e->getMessage() . ':' . __LINE__ );
 
 			return false;
 		}
@@ -201,13 +201,14 @@ abstract class Awfn {
 			$this->maybelog( 'debug', $xml_raw );
 			$this->maybelog( 'debug', '$body:' );
 			$this->maybelog( 'debug', $body );
+			$this->maybelog( 'debug', 'URL: ' . $this->url );
 			if ( '' === $body || strpos( $body, '<!DOCTYPE' ) ) {
 
 
 				return false;
 			}
 		} catch ( Exception $e ) {
-			$this->maybelog( 'warning', $e->getMessage() . __LINE__ );
+			$this->maybelog( 'warning', $e->getMessage() . ':' . __LINE__ );
 
 			return false;
 		}
@@ -215,12 +216,12 @@ abstract class Awfn {
 		try {
 			$loaded = simplexml_load_string( $body );
 			if ( ! empty( $loaded->errors ) ) {
-				$this->maybelog( 'debug', (string) $loaded->errors->error );
+				$this->maybelog( 'debug', (string) $loaded->errors->error . ':' . __LINE__ );
 
 				return false;
 			}
 		} catch ( Exception $e ) {
-			$this->maybelog( 'warning', $e->getMessage() . __LINE__ );
+			$this->maybelog( 'warning', $e->getMessage() . ':' . __LINE__ );
 
 			return false;
 		}
@@ -228,7 +229,7 @@ abstract class Awfn {
 		try {
 			$atts = $loaded->data->attributes();
 		} catch ( Exception $e ) {
-			$this->maybelog( 'warning', $e->getMessage() . __LINE__ );
+			$this->maybelog( 'warning', $e->getMessage() . ':' . __LINE__ );
 
 			return false;
 		}

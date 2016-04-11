@@ -37,8 +37,6 @@ class AwfnStation extends Awfn {
 
 		$this->clean_icao();
 
-		$this->maybelog( 'info', 'line ' . __LINE__ );
-
 	}
 
 	/**
@@ -104,12 +102,12 @@ class AwfnStation extends Awfn {
 	 */
 	public function clean_icao() {
 
-		$this->maybelog( 'debug', 'clean_icao()' );
+		$this->maybelog( 'debug', 'clean_icao()' . '/' . __FUNCTION__ . ':' . __LINE__ );
 
 		if ( ! preg_match( '/^[A-Za-z]{3,4}$/', $this->icao, $matches ) ) {
 			// $this->station has no chance of being legit
 //			$this->station = '';
-			$this->maybelog( 'debug', 'No pregmatch for ' . $this->icao );
+			$this->maybelog( 'debug', 'No pregmatch for ' . $this->icao . '/' . __FUNCTION__ . ':' . __LINE__ );
 
 			return false;
 		}
@@ -120,9 +118,9 @@ class AwfnStation extends Awfn {
 			foreach ( apply_filters( 'awfn_icao_search_array', array( 'K', 'C', 'M' ) ) as $first_letter ) {
 				$this->icao = $first_letter . $matches[0];
 				$this->url = sprintf( $this->base_url, $this->icao );
-				$this->maybelog( 'debug', 'Looking for match: ' . $this->icao );
+				$this->maybelog( 'debug', 'Looking for match: ' . $this->icao . '/' . __FUNCTION__ . ':' . __LINE__ );
 				if ( $this->get_apt_info() ) {
-					$this->maybelog( 'debug', 'Found match for ' . $this->icao );
+					$this->maybelog( 'debug', 'Found match for ' . $this->icao . '/' . __FUNCTION__ . ':' . __LINE__ );
 					break;
 				}
 			}
@@ -149,11 +147,11 @@ class AwfnStation extends Awfn {
 	 */
 	public function get_apt_info() {
 
-		$this->maybelog( 'debug', 'get_apt_info() ' . $this->icao );
+		$this->maybelog( 'debug', 'get_apt_info() ' . $this->icao . '/' . __FUNCTION__ . ':' . __LINE__ );
 
 		// If we don't have a possible match, bail
 		if ( ! preg_match( '~^[A-Za-z0-9]{4,4}$~', $this->icao, $matches ) ) {
-			$this->maybelog( 'debug', 'No pregmatch for ' . $this->icao );
+			$this->maybelog( 'debug', 'No pregmatch for ' . $this->icao . '/' . __FUNCTION__ . ':' . __LINE__ );
 
 			return false;
 		}
@@ -162,36 +160,37 @@ class AwfnStation extends Awfn {
 
 		// Check our stored option for matching ICAO data
 		$stations = get_option( STORED_STATIONS_KEY, array() );
-		$this->maybelog( 'debug', 'Stored stations found' );
+		$this->maybelog( 'debug', 'Stored stations found ' . __FUNCTION__ . ':' . __LINE__ );
 		$this->maybelog( 'debug', $stations );
 
 		if ( isset( $stations[ $this->icao ] ) ) {
-			$this->maybelog( 'debug', 'We have stored data for ' . $this->icao );
+			$this->maybelog( 'debug', 'We have stored data for ' . $this->icao . '/' . __FUNCTION__ . ':' . __LINE__ );
 			// Use cached station data
 			$this->xmlData = $stations[ $this->icao ];
 		} else {
-			$this->maybelog( 'debug', 'No stored data found for ' . $this->icao );
+			$this->maybelog( 'debug', 'No stored data found for ' . $this->icao . '/' . __FUNCTION__ . ':' . __LINE__ );
 			// No match found in option so we need to go external
 			$this->load_xml();
 
 			if ( $this->xmlData ) {
-				$this->maybelog( 'debug', 'We have xmlData' );
+				$this->maybelog( 'debug', 'We have xmlData ' . __FUNCTION__ . ':' . __LINE__ );
 				// Update option with new station data
 				$stations[ $this->icao ] = json_decode( json_encode( $this->xmlData ), 1 );
 				if ( update_option( STORED_STATIONS_KEY, $stations ) ) {
-					$this->maybelog( 'info', 'Station option updated' );
+					$this->maybelog( 'info', 'Station option updated ' . __FUNCTION__ . ':' . __LINE__ );
 				} else {
-					$this->maybelog( 'info', 'Station option not updated' );
+					$this->maybelog( 'info', 'Station option not updated ' . __FUNCTION__ . ':' . __LINE__ );
 				}
 			}
 		}
 
 		if ( $this->xmlData ) {
+			$this->maybelog( 'debug', '$this->xmlData ' . __FUNCTION__ . ':' . __LINE__ );
 			$this->maybelog( 'debug', $this->xmlData );
 
 			return true;
 		} else {
-			$this->maybelog( 'debug', 'No xmlData: ' . $this->icao );
+			$this->maybelog( 'debug', 'No xmlData: ' . $this->icao . '/' . __FUNCTION__ . ':' . __LINE__ );
 
 			return false;
 		}
@@ -223,7 +222,7 @@ class AwfnStation extends Awfn {
 	public function decode_data() {
 		// doing this to match other sub-classes functionality when building display
 		$this->data = $this->xmlData;
-		$this->maybelog( 'debug', 'decode_data()' );
+		$this->maybelog( 'debug', __FUNCTION__ . ':' . __LINE__ );
 		$this->maybelog( 'debug', $this->data );
 	}
 
@@ -235,17 +234,17 @@ class AwfnStation extends Awfn {
 	 */
 	public function build_display() {
 
-		$this->maybelog('debug', 'build_display()' );
+		$this->maybelog('debug', __FUNCTION__ . ':' . __LINE__ );
 
 		// TODO: improve
 		if ( $this->data && $this->show ) {
 			$keys = array( 'site', 'state' );
 			foreach ( $keys as $key ) {
 				if ( isset( $this->data[ $key ] ) ) {
-					$this->maybelog( 'debug', $key . ' found in $this->data' );
+					$this->maybelog( 'debug', $key . ' found in $this->data' . '/' . __FUNCTION__ . ':' . __LINE__ );
 					$location_array[] = $this->data[ $key ];
 				} else {
-					$this->maybelog( 'debug', $key . ' not found in $this->data' );
+					$this->maybelog( 'debug', $key . ' not found in $this->data' . '/' . __FUNCTION__ . ':' . __LINE__ );
 					$this->maybelog( 'debug', $this->data );
 				}
 			}
@@ -258,12 +257,12 @@ class AwfnStation extends Awfn {
 			}
 			$this->maybelog('debug', 'Display: ' . $this->display_data );
 		} else {
-			$this->maybelog('debug', 'No data or No show' );
+			$this->maybelog('debug', 'No data or No show' . '/' . __FUNCTION__ . ':' . __LINE__ );
 			$this->maybelog('debug', $this->data );
 			if( $this->show ) {
-				$this->maybelog('debug', 'No data' );
+				$this->maybelog('debug', 'No data' . '/' . __FUNCTION__ . ':' . __LINE__ );
 			} else {
-				$this->maybelog('debug', 'No Shaw' );
+				$this->maybelog('debug', 'No Shaw' . '/' . __FUNCTION__ . ':' . __LINE__ );
 			}
 			return $this->data;
 		}
