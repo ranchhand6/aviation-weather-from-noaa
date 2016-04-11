@@ -57,7 +57,7 @@ class AWFN_Shortcode {
 	public static function ajax_weather_shortcode() {
 
 		check_ajax_referer( 'shortcode-ajax', 'security' );
-		Adds_Weather_Widget::log('debug', 'AJAX checked: ' . __FUNCTION__ );
+		Adds_Weather_Widget::log('debug', 'AJAX referer checked: ' . __FUNCTION__ );
 
 		$atts  = $_POST['atts'];
 

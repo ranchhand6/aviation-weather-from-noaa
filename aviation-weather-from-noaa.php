@@ -202,7 +202,7 @@ class Adds_Weather_Widget extends WP_Widget {
 	public static function ajax_weather_widget() {
 
 		check_ajax_referer( 'widget-ajax', 'security' );
-		self::log( 'debug', 'AJAX checked: ' . __FUNCTION__ );
+		self::log( 'debug', 'AJAX referer checked: ' . __FUNCTION__ );
 
 		// Coming from our jQuery/AJAX POST
 		$instance = $_POST['instance'];
@@ -277,6 +277,7 @@ class Adds_Weather_Widget extends WP_Widget {
 			if ( $show_pireps ) {
 				self::log( 'debug', 'show pireps: true' );
 				$pirep = new AwfnPirep( $icao, $lat, $lng, $distance, $hours, $show_pireps );
+				self::log( 'debug', 'Should be new for ' . $icao . ' : ' . __FUNCTION__ . ':' . __LINE__ );
 				$pirep->go();
 			} else {
 				self::log( 'debug', 'show pireps: false' );

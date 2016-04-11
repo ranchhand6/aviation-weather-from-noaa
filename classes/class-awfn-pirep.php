@@ -25,7 +25,7 @@ class AwfnPirep extends Awfn {
 	 *
 	 * @since 0.4.0
 	 */
-	public function __construct( $icao = '', $lat, $lng, $distance = 100, $hours = 2, $show = true ) {
+	public function __construct( $icao = 'KSMF', $lat = 38.7, $lng = -121.6, $distance = 100, $hours = 2, $show = true ) {
 
 
 		self::$log_name = 'AircraftReport';

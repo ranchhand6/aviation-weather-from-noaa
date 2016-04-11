@@ -113,13 +113,13 @@ abstract class Awfn {
 	public function go( $display = true ) {
 
 		if ( $display ) {
-			$this->maybelog('info', 'go(true)' );
+			$this->maybelog( 'info', 'go(true)' );
 		} else {
-			$this->maybelog('info', 'go(false)' );
+			$this->maybelog( 'info', 'go(false)' );
 		}
 
 		if ( $this->load_xml() ) {
-			$this->maybelog('debug', 'load_xml() returned true' );
+			$this->maybelog( 'debug', 'load_xml() returned true' );
 
 			$this->decode_data();
 			$this->build_display();
@@ -178,73 +178,99 @@ abstract class Awfn {
 	 */
 	public function load_xml() {
 
-		try {
-			$xml_raw = wp_remote_get( esc_url_raw( $this->url ) );
-			$this->maybelog('debug', '$this->url: ' . __FUNCTION__ . ':' . __LINE__ );
-			$this->maybelog( 'debug', $this->url );
-			if ( is_wp_error( $xml_raw ) ) {
-				$this->maybelog( 'debug', $xml_raw->get_error_message() . ':' . __LINE__ );
-				$this->xmlData = false;
+		$xml_raw = wp_remote_get( esc_url_raw( $this->url ) );
 
-				return false;
-			}
-		} catch ( Exception $e ) {
-			$this->maybelog( 'warning', $e->getMessage() . ':' . __LINE__ );
+		$this->maybelog( 'debug', '$this->url ' . __FUNCTION__ . ':' . __LINE__ );
+		$this->maybelog( 'debug', 'URL: ' . $this->url );
+		$this->maybelog( 'debug', '$xml_raw:' );
+		$this->maybelog( 'debug', $xml_raw );
+
+		if ( is_wp_error( $xml_raw ) ) {
+			$this->maybelog( 'debug', $xml_raw->get_error_message() . ':' . __FUNCTION__ . ':' . __LINE__ );
+			$this->xmlData = false;
 
 			return false;
 		}
 
-		try {
+		if ( 200 == wp_remote_retrieve_response_code( $xml_raw ) ) {
 			$body = wp_remote_retrieve_body( $xml_raw );
 
-			$this->maybelog( 'debug', '$xml_raw:' );
-			$this->maybelog( 'debug', $xml_raw );
 			$this->maybelog( 'debug', '$body:' );
 			$this->maybelog( 'debug', $body );
-			$this->maybelog( 'debug', 'URL: ' . $this->url );
-			if ( '' === $body || strpos( $body, '<!DOCTYPE' ) ) {
 
-
+			if ( '' == $body || strpos( $body, '<!DOCTYPE' ) ) {
+				$this->maybelog( 'debug', '$body contains empty string or found "<!DOCTYPE" : ' . __FUNCTION__ . ':' . __LINE__ );
 				return false;
 			}
-		} catch ( Exception $e ) {
-			$this->maybelog( 'warning', $e->getMessage() . ':' . __LINE__ );
 
-			return false;
-		}
+			libxml_use_internal_errors(true);
 
-		try {
 			$loaded = simplexml_load_string( $body );
-			if ( ! empty( $loaded->errors ) ) {
-				$this->maybelog( 'debug', (string) $loaded->errors->error . ':' . __LINE__ );
+			$xml = explode( "\n", $body );
+			if( false === $loaded ) {
+				$this->maybelog( 'debug', 'Could not load body into simplexml :' . __FUNCTION__ . ':' . __LINE__ );
+				$errors = libxml_get_errors();
+				$this->maybelog( 'warning', 'Errors ' . __FUNCTION__ . ':' . __LINE__ );
+				$this->maybelog('warning', $errors );
+
+				foreach ($errors as $error) {
+					$this->maybelog('debug', $this->display_xml_error( $error, $xml ) );
+				}
+
+				libxml_clear_errors();
 
 				return false;
 			}
-		} catch ( Exception $e ) {
-			$this->maybelog( 'warning', $e->getMessage() . ':' . __LINE__ );
 
-			return false;
-		}
 
-		try {
 			$atts = $loaded->data->attributes();
-		} catch ( Exception $e ) {
-			$this->maybelog( 'warning', $e->getMessage() . ':' . __LINE__ );
+			$results = isset( $atts['num_results'] ) ? $atts['num_results'] : 0;
+			$this->maybelog( 'debug', 'Results: ' . $results . ' ' . __FUNCTION__ . ':' . __LINE__ );
+
+
+			if ( 0 < $results ) {
+				$this->xmlData = $loaded->data->{static::$log_name};
+				$this->maybelog( 'info', static::$log_name . ' XML loaded for ' . $this->icao . ': ' . __FUNCTION__ . ':' . __LINE__ );
+
+				return true;
+			}
+		} else {
+			$this->maybelog('debug', $xml_raw->get_error_message() );
+			$this->maybelog( 'debug', 'No xml loaded for ' . $this->icao );
 
 			return false;
 		}
 
-		if ( 0 < $atts['num_results'] ) {
-			$this->xmlData = $loaded->data->{static::$log_name};
-			$this->maybelog('info', 'XML loaded for ' . $this->icao );
 
-			return true;
+
+	}
+
+	protected function display_xml_error($error, $xml)
+	{
+		$return  = $xml[$error->line - 1] . "<br />\n";
+		$return .= str_repeat('-', $error->column) . "^<br />\n";
+
+		switch ($error->level) {
+			case LIBXML_ERR_WARNING:
+				$return .= "Warning $error->code: ";
+				break;
+			case LIBXML_ERR_ERROR:
+				$return .= "Error $error->code: ";
+				break;
+			case LIBXML_ERR_FATAL:
+				$return .= "Fatal Error $error->code: ";
+				break;
 		}
 
-		$this->maybelog( 'debug', 'No xml loaded for ' . $this->icao );
+		$return .= trim($error->message) .
+		           "<br />\n  Line: $error->line" .
+		           "<br />\n  Column: $error->column";
 
-		return false;
+		if ($error->file) {
+			$return .= "<br />\n  File: $error->file";
+		}
 
+		return "$return<br />\n\n--------------------------------------------<br />\n\n";
 	}
 
 }

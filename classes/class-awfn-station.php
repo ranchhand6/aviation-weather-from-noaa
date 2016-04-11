@@ -60,6 +60,7 @@ class AwfnStation extends Awfn {
 	 * @since 0.4.0
 	 */
 	public function lat() {
+		$this->maybelog( 'info', $this->icao . ' lat: ' . (float) $this->xmlData['latitude'] );
 		return $this->xmlData ? (float) $this->xmlData['latitude'] : false;
 	}
 
@@ -70,6 +71,7 @@ class AwfnStation extends Awfn {
 	 * @since 0.4.0
 	 */
 	public function lng() {
+		$this->maybelog( 'info', $this->icao . ' lng: ' . (float) $this->xmlData['longitude'] );
 		return $this->xmlData ? (float) $this->xmlData['longitude'] : false;
 	}
 
@@ -241,10 +243,10 @@ class AwfnStation extends Awfn {
 			$keys = array( 'site', 'state' );
 			foreach ( $keys as $key ) {
 				if ( isset( $this->data[ $key ] ) ) {
-					$this->maybelog( 'debug', $key . ' found in $this->data' . '/' . __FUNCTION__ . ':' . __LINE__ );
+					$this->maybelog( 'debug', $key . ' found in $this->data ' . __FUNCTION__ . ':' . __LINE__ );
 					$location_array[] = $this->data[ $key ];
 				} else {
-					$this->maybelog( 'debug', $key . ' not found in $this->data' . '/' . __FUNCTION__ . ':' . __LINE__ );
+					$this->maybelog( 'debug', $key . ' not found in $this->data ' . __FUNCTION__ . ':' . __LINE__ );
 					$this->maybelog( 'debug', $this->data );
 				}
 			}
@@ -257,12 +259,12 @@ class AwfnStation extends Awfn {
 			}
 			$this->maybelog('debug', 'Display: ' . $this->display_data );
 		} else {
-			$this->maybelog('debug', 'No data or No show' . '/' . __FUNCTION__ . ':' . __LINE__ );
+			$this->maybelog('debug', 'No data or No show ' . __FUNCTION__ . ':' . __LINE__ );
 			$this->maybelog('debug', $this->data );
 			if( $this->show ) {
-				$this->maybelog('debug', 'No data' . '/' . __FUNCTION__ . ':' . __LINE__ );
+				$this->maybelog('debug', 'No data ' . __FUNCTION__ . ':' . __LINE__ );
 			} else {
-				$this->maybelog('debug', 'No Shaw' . '/' . __FUNCTION__ . ':' . __LINE__ );
+				$this->maybelog('debug', 'No Shaw ' . __FUNCTION__ . ':' . __LINE__ );
 			}
 			return $this->data;
 		}
