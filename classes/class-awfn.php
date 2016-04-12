@@ -128,6 +128,8 @@ abstract class Awfn {
 
 				$this->display_data();
 			}
+		} else {
+			$this->maybelog('debug', 'Did not load xml ' . __FUNCTION__ . ':' . __LINE__ );
 		}
 
 	}
@@ -178,7 +180,7 @@ abstract class Awfn {
 	 */
 	public function load_xml() {
 
-		$xml_raw = wp_remote_get( esc_url_raw( $this->url ) );
+		$xml_raw = wp_remote_get( esc_url_raw( $this->url ), array( 'timeout' => 120, 'httpversion' => '1.1' ) );
 
 		$this->maybelog( 'debug', '$this->url ' . __FUNCTION__ . ':' . __LINE__ );
 		$this->maybelog( 'debug', 'URL: ' . $this->url );
@@ -192,65 +194,61 @@ abstract class Awfn {
 			return false;
 		}
 
-		if ( 200 == wp_remote_retrieve_response_code( $xml_raw ) ) {
-			$body = wp_remote_retrieve_body( $xml_raw );
+		$body = wp_remote_retrieve_body( $xml_raw );
 
-			$this->maybelog( 'debug', '$body:' );
-			$this->maybelog( 'debug', $body );
+		$this->maybelog( 'debug', '$body:' );
+		$this->maybelog( 'debug', $body );
 
-			if ( '' == $body || strpos( $body, '<!DOCTYPE' ) ) {
-				$this->maybelog( 'debug', '$body contains empty string or found "<!DOCTYPE" : ' . __FUNCTION__ . ':' . __LINE__ );
-				return false;
+		if ( '' == $body || strpos( $body, '<!DOCTYPE' ) ) {
+			$this->maybelog( 'debug', '$body contains empty string or found "<!DOCTYPE" : ' . __FUNCTION__ . ':' . __LINE__ );
+
+			return false;
+		}
+
+		libxml_use_internal_errors( true );
+
+		$loaded = simplexml_load_string( $body );
+		$xml    = explode( "\n", $body );
+		if ( false === $loaded ) {
+			$this->maybelog( 'debug', 'Could not load body into simplexml :' . __FUNCTION__ . ':' . __LINE__ );
+			$errors = libxml_get_errors();
+			$this->maybelog( 'warning', 'Errors ' . __FUNCTION__ . ':' . __LINE__ );
+			$this->maybelog( 'warning', $errors );
+
+			foreach ( $errors as $error ) {
+				$this->maybelog( 'debug', $this->display_xml_error( $error, $xml ) );
 			}
 
-			libxml_use_internal_errors(true);
-
-			$loaded = simplexml_load_string( $body );
-			$xml = explode( "\n", $body );
-			if( false === $loaded ) {
-				$this->maybelog( 'debug', 'Could not load body into simplexml :' . __FUNCTION__ . ':' . __LINE__ );
-				$errors = libxml_get_errors();
-				$this->maybelog( 'warning', 'Errors ' . __FUNCTION__ . ':' . __LINE__ );
-				$this->maybelog('warning', $errors );
-
-				foreach ($errors as $error) {
-					$this->maybelog('debug', $this->display_xml_error( $error, $xml ) );
-				}
-
-				libxml_clear_errors();
-
-				return false;
-			}
-
-
-			$atts = $loaded->data->attributes();
-			$results = isset( $atts['num_results'] ) ? $atts['num_results'] : 0;
-			$this->maybelog( 'debug', 'Results: ' . $results . ' ' . __FUNCTION__ . ':' . __LINE__ );
-
-
-			if ( 0 < $results ) {
-				$this->xmlData = $loaded->data->{static::$log_name};
-				$this->maybelog( 'info', static::$log_name . ' XML loaded for ' . $this->icao . ': ' . __FUNCTION__ . ':' . __LINE__ );
-
-				return true;
-			}
-		} else {
-			$this->maybelog('debug', $xml_raw->get_error_message() );
-			$this->maybelog( 'debug', 'No xml loaded for ' . $this->icao );
+			libxml_clear_errors();
 
 			return false;
 		}
 
 
+		$atts    = $loaded->data->attributes();
+		$results = isset( $atts['num_results'] ) ? $atts['num_results'] : 0;
+		$this->maybelog( 'debug', 'Results: ' . $results . ' ' . __FUNCTION__ . ':' . __LINE__ );
+
+
+		if ( 0 < $results ) {
+			$this->xmlData = $loaded->data->{static::$log_name};
+			$this->maybelog( 'info', static::$log_name . ' XML loaded for ' . $this->icao . ': ' . __FUNCTION__ . ':' . __LINE__ );
+
+			return true;
+		}
+
+		$this->maybelog( 'debug', 'No xml loaded for ' . $this->icao );
+
+		return false;
+
 
 	}
 
-	protected function display_xml_error($error, $xml)
-	{
-		$return  = $xml[$error->line - 1] . "<br />\n";
-		$return .= str_repeat('-', $error->column) . "^<br />\n";
+	protected function display_xml_error( $error, $xml ) {
+		$return = $xml[ $error->line - 1 ] . "<br />\n";
+		$return .= str_repeat( '-', $error->column ) . "^<br />\n";
 
-		switch ($error->level) {
+		switch ( $error->level ) {
 			case LIBXML_ERR_WARNING:
 				$return .= "Warning $error->code: ";
 				break;
@@ -262,11 +260,11 @@ abstract class Awfn {
 				break;
 		}
 
-		$return .= trim($error->message) .
+		$return .= trim( $error->message ) .
 		           "<br />\n  Line: $error->line" .
 		           "<br />\n  Column: $error->column";
 
-		if ($error->file) {
+		if ( $error->file ) {
 			$return .= "<br />\n  File: $error->file";
 		}
 

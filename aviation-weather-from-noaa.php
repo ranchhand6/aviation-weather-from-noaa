@@ -184,14 +184,12 @@ class Adds_Weather_Widget extends WP_Widget {
 		extract( $args, EXTR_SKIP );
 
 		echo $before_widget;
-
 		?>
 
 		<section class='adds-weather-wrapper' data-instance='<?php echo json_encode( $instance ); ?>'><img
 				id="<?php echo $this->id; ?>-loading" src="<?php echo $spinner_url; ?>"/></section>
 		<?php
 		echo $after_widget;
-
 
 	} // end widget
 

@@ -154,9 +154,14 @@ class AwfnCli extends WP_CLI_Command {
 		$show = false;
 
 		$airport = new AwfnStation( $icao );
+		WP_CLI::line( 'airport: ' . $airport->get_site() );
 
 		$lat    = $airport->lat();
+		WP_CLI::line( $icao . ' latitude: ' . $lat );
+
 		$lng    = $airport->lng();
+		WP_CLI::line( $icao . ' longitude: ' . $lng );
+
 		$pireps = new AwfnPirep( $icao, $lat, $lng, $distance, $hours, $show );
 		$pireps->go( false );
 

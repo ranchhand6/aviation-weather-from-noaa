@@ -53,6 +53,10 @@ class AwfnStation extends Awfn {
 		return $this->icao;
 	}
 
+	public function get_site() {
+		return isset( $this->xmlData['site'] ) ? $this->xmlData['site'] : 'Site name not found';
+	}
+
 	/**
 	 * Return airport latitude if available
 	 *
