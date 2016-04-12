@@ -125,12 +125,23 @@ class AWFNLogs {
 			'awfn-logs-admin', // page
 			'awfn_logs_setting_section' // section
 		);
+
+		add_settings_field(
+			'debug_1',
+			'SSLVerify',
+			array( $this, 'debug_1_callback' ),
+			'awfn-logs-admin',
+			'awfn_logs_setting_section'
+		);
 	}
 
 	public function awfn_logs_sanitize($input) {
 		$sanitary_values = array();
 		if ( isset( $input['debug_0'] ) ) {
 			$sanitary_values['debug_0'] = $input['debug_0'];
+		}
+		if ( isset( $input['debug_1'] ) ) {
+			$sanitary_values['debug_1'] = $input['debug_1'];
 		}
 
 		return $sanitary_values;
@@ -144,6 +155,14 @@ class AWFNLogs {
 		printf(
 			'<input type="checkbox" name="awfn_logs_option_name[debug_0]" id="debug_0" value="debug_0" %s> <label for="debug_0">Check to enable logging</label>',
 			( isset( $this->awfn_logs_options['debug_0'] ) && $this->awfn_logs_options['debug_0'] === 'debug_0' ) ? 'checked' : ''
+		);
+	}
+
+	public function debug_1_callback() {
+		printf(
+			'<input type="checkbox" name=awfn_logs_option_name[debug_1]" id="debug_1" value="debug_1" %s><label for="debug_1">Check to <strong>disable</strong> sslverify in wp_remote_get()</label>
+ <p>(only check this if you are seeing Bad Request errors in the logs)</p>',
+			( isset( $this->awfn_logs_options['debug_1'] ) && $this->awfn_logs_options['debug_1'] === 'debug_1' ) ? 'checked' : ''
 		);
 	}
 
@@ -205,7 +224,7 @@ class AWFNLogs {
 /**
  * this only happens in admin and if AWFN_DEBUG is true
  */
-$debug = ( defined( 'AWFN_DEBUG' ) && AWFN_DEBUG ) ? true : false;
+//$debug = ( defined( 'AWFN_DEBUG' ) && AWFN_DEBUG ) ? true : false;
 if ( is_admin() ) {
 	$awfn_errors = new AWFNLogs();
 }

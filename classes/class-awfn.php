@@ -27,6 +27,7 @@ abstract class Awfn {
 	protected $display_data = false;
 	public $xmlData = false;
 	protected $decoded = false;
+	protected $sslverify;
 
 	public function get_hours() {
 		return $this->hours;
@@ -59,6 +60,7 @@ abstract class Awfn {
 	private function prepare_logger() {
 		$awfn_logs_options = get_option( 'awfn_logs_option_name' );
 		$debug_0           = isset( $awfn_logs_options['debug_0'] ) ? true : false;
+		$this->sslverify   = isset( $awfn_logs_options['debug_1'] ) ? false : true;
 
 		// Prepare logger
 		if ( $debug_0 ) {
@@ -129,7 +131,7 @@ abstract class Awfn {
 				$this->display_data();
 			}
 		} else {
-			$this->maybelog('debug', 'Did not load xml ' . __FUNCTION__ . ':' . __LINE__ );
+			$this->maybelog( 'debug', 'Did not load xml ' . __FUNCTION__ . ':' . __LINE__ );
 		}
 
 	}
@@ -180,7 +182,18 @@ abstract class Awfn {
 	 */
 	public function load_xml() {
 
-		$xml_raw = wp_remote_get( esc_url_raw( $this->url ), array( 'timeout' => 120, 'httpversion' => '1.1' ) );
+		$args = array(
+			'timeout'     => 120,
+			'httpversion' => '1.1',
+			'sslverify'   => false
+		);
+
+		if ( $this->sslverify ) {
+			$xml_raw = wp_remote_get( esc_url_raw( $this->url ) );
+		} else {
+			$xml_raw = wp_remote_get( esc_url_raw( $this->url ), $args );
+		}
+
 
 		$this->maybelog( 'debug', '$this->url ' . __FUNCTION__ . ':' . __LINE__ );
 		$this->maybelog( 'debug', 'URL: ' . $this->url );
