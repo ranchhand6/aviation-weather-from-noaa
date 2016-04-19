@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<response xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XML-Schema-instance" version="1.0" xsi:noNamespaceSchemaLocation="http://weather.aero/schema/station1_0.xsd">
+  <request_index>111513144</request_index>
+  <data_source name="stations" />
+  <request type="retrieve" />
+  <errors />
+  <warnings />
+  <time_taken_ms>31</time_taken_ms>
+  <data num_results="1">
+    <Station>
+      <station_id>EGLL</station_id>
+      <wmo_id>03772</wmo_id>
+      <latitude>51.48</latitude>
+      <longitude>-0.45</longitude>
+      <elevation_m>24.0</elevation_m>
+      <site>LONDON/HEATHROW</site>
+      <country>GB</country>
+      <site_type>
+        <METAR />
+        <TAF />
+      </site_type>
+    </Station>
+  </data>
+</response>
+

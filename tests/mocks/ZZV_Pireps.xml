@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<response xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XML-Schema-instance" version="1.0" xsi:noNamespaceSchemaLocation="http://aviationweather.gov/adds/schema/aircraftreport1_0.xsd">
+  <request_index>110956187</request_index>
+  <data_source name="aircraftreports" />
+  <request type="retrieve" />
+  <errors />
+  <warnings />
+  <time_taken_ms>10</time_taken_ms>
+  <data num_results="33">
+    <AircraftReport>
+      <receipt_time>2016-04-19T00:03:32Z</receipt_time>
+      <observation_time>2016-04-18T23:41:00Z</observation_time>
+      <aircraft_ref>C182</aircraft_ref>
+      <latitude>43.4325</latitude>
+      <longitude>-83.4041</longitude>
+      <altitude_ft_msl>2400</altitude_ft_msl>
+      <turbulence_condition turbulence_type="LLWS" turbulence_intensity="MOD-SEV" turbulence_base_ft_msl="2300" />
+      <report_type>Urgent PIREP</report_type>
+      <raw_text>CFS UUA /OV HYX090020/TM 2341/FL024/TP C182/TB MOD-SEV 023/RM LLWS +/-20KT DURD 030-023 VMC</raw_text>
+    </AircraftReport>
+    <AircraftReport>
+      <receipt_time>2016-04-19T00:03:32Z</receipt_time>
+      <observation_time>2016-04-18T23:36:00Z</observation_time>
+      <aircraft_ref>B738</aircraft_ref>
+      <latitude>36.6274</latitude>
+      <longitude>-84.8604</longitude>
+      <altitude_ft_msl>32000</altitude_ft_msl>
+      <turbulence_condition turbulence_intensity="LGT" />
+      <report_type>PIREP</report_type>
+      <raw_text>LOZ UA /OV LVT080015/TM 2336/FL320/TP B738/TB LGT</raw_text>
+    </AircraftReport>
+    <AircraftReport>
+      <receipt_time>2016-04-18T23:47:40Z</receipt_time>
+      <observation_time>2016-04-18T23:18:00Z</observation_time>
+      <aircraft_ref>A320</aircraft_ref>
+      <latitude>40.556</latitude>
+      <longitude>-86.8504</longitude>
+      <altitude_ft_msl>34000</altitude_ft_msl>
+      <turbulence_condition turbulence_type="CHOP" turbulence_intensity="LGT-MOD" turbulence_base_ft_msl="34000" />
+      <wx_string>HZ</wx_string>
+      <report_type>PIREP</report_type>
+      <raw_text>LAF UA /OV BVT090010/TM 2318/FL340/TP A320/WX HAZY/TB LGT-MOD CHOP 340/RM BORDERLINE MOD CHOP FL340 MOSTLY CONT LGT CHOP AIRCRAFT DESCENDED TO FL320 AND RECEIVED A SMOOTH RIDE</raw_text>
+    </AircraftReport>
+    <AircraftReport>
+      <receipt_time>2016-04-18T23:22:03Z</receipt_time>
+      <observation_time>2016-04-18T23:16:00Z</observation_time>
+      <aircraft_ref>UAL1551</aircraft_ref>
+      <latitude>40.8333</latitude>
+      <longitude>-77.4333</longitude>
+      <altitude_ft_msl>34000</altitude_ft_msl>
+      <turbulence_condition turbulence_intensity="NEG" />
+      <turbulence_condition turbulence_intensity="NEG" />
+      <temp_c>-23</temp_c>
+      <wind_dir_degrees>324</wind_dir_degrees>
+      <wind_speed_kt>49</wind_speed_kt>
+      <report_type>AIREP</report_type>
+      <raw_text>ARP UAL1551 4050N 07726W 2316 F340 M23 324/049 TB SMTH SK CLEAR IC NONE RM B739 OV FORTT MOSTLY SMOOTH</raw_text>
+    </AircraftReport>
+    <AircraftReport>
+      <receipt_time>2016-04-18T23:00:28Z</receipt_time>
+      <observation_time>2016-04-18T22:58:00Z</observation_time>
+      <aircraft_ref>B737</aircraft_ref>
+      <latitude>38.1889</latitude>
+      <longitude>-85.1685</longitude>
+      <altitude_ft_msl>32000</altitude_ft_msl>
+      <turbulence_condition turbulence_type="CHOP" turbulence_intensity="LGT" turbulence_base_ft_msl="32000" turbulence_freq="CONT" />
+      <report_type>PIREP</report_type>
+      <raw_text>LOU UA /OV IIU075020/TM 2258/FL320/TP B737/TB CONT LGT CHOP 320/RM AWC-WEBSWA</raw_text>
+    </AircraftReport>
+    <AircraftReport>
+      <receipt_time>2016-04-18T23:00:28Z</receipt_time>
+      <observation_time>2016-04-18T22:50:00Z</observation_time>
+      <aircraft_ref>C172</aircraft_ref>
+      <latitude>35.7901</latitude>
+      <longitude>-83.0524</longitude>
+      <altitude_ft_msl>9500</altitude_ft_msl>
+      <turbulence_condition turbulence_intensity="LGT" turbulence_freq="CONT" />
+      <visibility_statute_mi>4</visibility_statute_mi>
+      <wx_string>FU</wx_string>
+      <temp_c>6</temp_c>
+      <report_type>PIREP</report_type>
+      <raw_text>BNA UA /OV SOT /TM 2250 /FL095 /TP C172 /WX FV04SM FU /TA 06 /TB CONS LGT</raw_text>
+    </AircraftReport>
+    <AircraftReport>
+      <receipt_time>2016-04-18T22:50:04Z</receipt_time>
+      <observation_time>2016-04-18T22:44:00Z</observation_time>
+      <aircraft_ref>B737</aircraft_ref>
+      <latitude>38.3759</latitude>
+      <longitude>-81.593</longitude>
+      <altitude_ft_msl>33000</altitude_ft_msl>
+      <turbulence_condition turbulence_type="CHOP" turbulence_intensity="LGT" turbulence_freq="CONT" />
+      <report_type>PIREP</report_type>
+      <raw_text>CRW UA /OV KCRW/TM 2244/FL330/TP B737/TB CONT LGT CHOP/RM CONT LGT CHOP FL330 AND ABOVE. FL320 GOOD RIDE. AWC-WEBSWA</raw_text>
+    </AircraftReport>
+    <AircraftReport>
+      <receipt_time>2016-04-18T22:47:36Z</receipt_time>
+      <observation_time>2016-04-18T22:35:00Z</observation_time>
+      <aircraft_ref>B737</aircraft_ref>
+      <latitude>40.3831</latitude>
+      <longitude>-84.222</longitude>
+      <altitude_ft_msl>38000</altitude_ft_msl>
+      <turbulence_condition turbulence_intensity="LGT" turbulence_base_ft_msl="38000" />
+      <report_type>PIREP</report_type>
+      <raw_text>DAY UA /OV ROD305010/TM 2235/FL380/TP B737/TB LGT 380/RM AWC-WEB/SWA</raw_text>
+    </AircraftReport>
+    <AircraftReport>
+      <receipt_time>2016-04-18T22:38:38Z</receipt_time>
+      <observation_time>2016-04-18T22:27:00Z</observation_time>
+      <aircraft_ref>E145</aircraft_ref>
+      <latitude>40.5624</latitude>
+      <longitude>-78.4573</longitude>
+      <altitude_ft_msl>36000</altitude_ft_msl>
+      <turbulence_condition turbulence_intensity="LGT" turbulence_freq="CONT" />
+      <turbulence_condition turbulence_type="CHOP" turbulence_intensity="MOD" />
+      <report_type>PIREP</report_type>
+      <raw_text>FIG UA /OV PSB225030/TM 2227/FL360/TP E145/TB CONT LGT - MDT CHOP</raw_text>
+    </AircraftReport>
+    <AircraftReport>
+      <receipt_time>2016-04-18T22:25:15Z</receipt_time>
+      <observation_time>2016-04-18T22:15:00Z</observation_time>
+      <aircraft_ref>B737L</aircraft_ref>
+      <latitude>41.0814</latitude>
+      <longitude>-80.6747</longitude>
+      <altitude_ft_msl>38000</altitude_ft_msl>
+      <turbulence_condition turbulence_type="CHOP" turbulence_intensity="LGT" turbulence_freq="CONT" />
+      <report_type>PIREP</report_type>
+      <raw_text>YNG UA /OV YNG180015/TM 2215/FL380/TP B737/L/TB CONT LGT CHOP</raw_text>
+    </AircraftReport>
+    <AircraftReport>
+      <receipt_time>2016-04-18T22:25:15Z</receipt_time>
+      <observation_time>2016-04-18T22:10:00Z</observation_time>
+      <aircraft_ref>CRJ7L</aircraft_ref>
+      <latitude>41.2019</latitude>
+      <longitude>-83.6387</longitude>
+      <altitude_ft_msl>38000</altitude_ft_msl>
+      <turbulence_condition turbulence_intensity="NEG" />
+      <report_type>PIREP</report_type>
+      <raw_text>FDY UA /OV VWV180015/TM 2210/FL380/TP CRJ7/L/TB SMOOTH</raw_text>
+    </AircraftReport>
+    <AircraftReport>
+      <receipt_time>2016-04-18T22:11:39Z</receipt_time>
+      <observation_time>2016-04-18T21:52:00Z</observation_time>
+      <aircraft_ref>CRJ7</aircraft_ref>
+      <latitude>39.6385</latitude>
+      <longitude>-81.8212</longitude>
+      <altitude_ft_msl>34000</altitude_ft_msl>
+      <turbulence_condition turbulence_type="CAT" turbulence_intensity="LGT-MOD" turbulence_base_ft_msl="34000" />
+      <report_type>PIREP</report_type>
+      <raw_text>PKB UA /OV PKB315025/TM 2152/FL340/TP CRJ7/TB LGT-MOD CAT 340</raw_text>
+    </AircraftReport>
+    <AircraftReport>
+      <receipt_time>2016-04-18T21:30:05Z</receipt_time>
+      <observation_time>2016-04-18T21:26:00Z</observation_time>
+      <aircraft_ref>B733</aircraft_ref>
+      <latitude>37.6382</latitude>
+      <longitude>-82.4844</longitude>
+      <altitude_ft_msl>33000</altitude_ft_msl>
+      <turbulence_condition turbulence_type="CHOP" turbulence_intensity="LGT" turbulence_base_ft_msl="33000" turbulence_freq="OCNL" />
+      <report_type>PIREP</report_type>
+      <raw_text>HTS UA /OV KTRI357070/TM 2126/FL330/TP B733/TB OCNL LGT CHOP 330/RM AWC-WEBSWA</raw_text>
+    </AircraftReport>
+    <AircraftReport>
+      <receipt_time>2016-04-18T21:29:34Z</receipt_time>
+      <observation_time>2016-04-18T21:19:00Z</observation_time>
+      <aircraft_ref>P28A</aircraft_ref>
+      <latitude>38.1682</latitude>
+      <longitude>-79.0697</longitude>
+      <altitude_ft_msl>9500</altitude_ft_msl>
+      <turbulence_condition turbulence_intensity="MOD" turbulence_base_ft_msl="7500" turbulence_top_ft_msl="9500" />
+      <icing_condition icing_intensity="NEGclr" icing_base_ft_msl="9500" />
+      <visibility_statute_mi>10</visibility_statute_mi>
+      <temp_c>2</temp_c>
+      <report_type>PIREP</report_type>
+      <raw_text>SHD UA /OV SHD235010/TM 2119/FL095/TP P28A/WX FV10SM/TA 02/TB MOD 075-095</raw_text>
+    </AircraftReport>
+    <AircraftReport>
+      <receipt_time>2016-04-18T21:06:31Z</receipt_time>
+      <observation_time>2016-04-18T20:55:00Z</observation_time>
+      <aircraft_ref>E45X</aircraft_ref>
+      <latitude>38.5867</latitude>
+      <longitude>-80.1732</longitude>
+      <altitude_ft_msl>36000</altitude_ft_msl>
+      <turbulence_condition turbulence_type="CHOP" turbulence_intensity="LGT" turbulence_base_ft_msl="36000" />
+      <report_type>PIREP</report_type>
+      <raw_text>EKN UA /OV EKN190020/TM 2055/FL360/TP E45X/TB LGT CHOP 360/RM CONSTANT CHOP</raw_text>
+    </AircraftReport>
+    <AircraftReport>
+      <receipt_time>2016-04-18T21:06:31Z</receipt_time>
+      <observation_time>2016-04-18T20:55:00Z</observation_time>
+      <aircraft_ref>CRJ7</aircraft_ref>
+      <latitude>40.258</latitude>
+      <longitude>-80.7326</longitude>
+      <altitude_ft_msl>38000</altitude_ft_msl>
+      <turbulence_condition turbulence_type="CHOP" turbulence_intensity="LGT" turbulence_base_ft_msl="38000" />
+      <report_type>PIREP</report_type>
+      <raw_text>ZZV UA /OV AIR015015/TM 2055/FL380/TP CRJ7/TB LGT CHOP 380/RM CONTANT CHOP</raw_text>
+    </AircraftReport>
+    <AircraftReport>
+      <receipt_time>2016-04-18T21:06:31Z</receipt_time>
+      <observation_time>2016-04-18T20:54:00Z</observation_time>
+      <aircraft_ref>CL30</aircraft_ref>
+      <latitude>38.1035</latitude>
+      <longitude>-85.5774</longitude>
+      <altitude_ft_msl>39000</altitude_ft_msl>
+      <turbulence_condition turbulence_type="CHOP" turbulence_intensity="LGT-MOD" />
+      <report_type>PIREP</report_type>
+      <raw_text>SDF UA /OV IIU/TM 2054/FL390/TP CL30/TB LGT-MOD CHOP</raw_text>
+    </AircraftReport>
+    <AircraftReport>
+      <receipt_time>2016-04-18T21:06:31Z</receipt_time>
+      <observation_time>2016-04-18T20:53:00Z</observation_time>
+      <aircraft_ref>A319</aircraft_ref>
+      <latitude>39.8008</latitude>
+      <longitude>-80.6548</longitude>
+      <altitude_ft_msl>36000</altitude_ft_msl>
+      <turbulence_condition turbulence_type="CHOP" turbulence_intensity="NEG" turbulence_base_ft_msl="36000" />
+      <report_type>PIREP</report_type>
+      <raw_text>ZZV UA /OV AIR150015/TM 2053/FL360/TP A319/TB NEG CHOP 360</raw_text>
+    </AircraftReport>
+    <AircraftReport>
+      <receipt_time>2016-04-18T21:06:31Z</receipt_time>
+      <observation_time>2016-04-18T20:53:00Z</observation_time>
+      <aircraft_ref>A320</aircraft_ref>
+      <latitude>40.2878</latitude>
+      <longitude>-84.0431</longitude>
+      <altitude_ft_msl>35000</altitude_ft_msl>
+      <turbulence_condition turbulence_type="CHOP" turbulence_intensity="LGT" turbulence_base_ft_msl="35000" />
+      <report_type>PIREP</report_type>
+      <raw_text>DAY UA /OV ROD/TM 2053/FL350/TP A320/TB LGT CHOP 350/RM OCCNL CHOP</raw_text>
+    </AircraftReport>
+    <AircraftReport>
+      <receipt_time>2016-04-18T21:03:40Z</receipt_time>
+      <observation_time>2016-04-18T20:50:00Z</observation_time>
+      <aircraft_ref>H25B</aircraft_ref>
+      <latitude>38.2246</latitude>
+      <longitude>-82.045</longitude>
+      <altitude_ft_msl>39000</altitude_ft_msl>
+      <turbulence_condition turbulence_type="CHOP" turbulence_intensity="NEG" turbulence_base_ft_msl="39000" />
+      <report_type>PIREP</report_type>
+      <raw_text>CRW UA /OV HVQ240015/TM 2050/FL390/TP H25B/TB NEG CHOP 390</raw_text>
+    </AircraftReport>
+    <AircraftReport>
+      <receipt_time>2016-04-18T21:03:40Z</receipt_time>
+      <observation_time>2016-04-18T20:49:00Z</observation_time>
+      <aircraft_ref>B737</aircraft_ref>
+      <latitude>41.5176</latitude>
+      <longitude>-86.8958</longitude>
+      <altitude_ft_msl>10000</altitude_ft_msl>
+      <turbulence_condition turbulence_intensity="MOD" turbulence_base_ft_msl="10000" turbulence_freq="OCNL" />
+      <report_type>PIREP</report_type>
+      <raw_text>GYY UA /OV GIJ240030/TM 2049/FL100/TP B737/TB OCNL MOD 100/RM CONT LGT OCNL MOD BELOW 10/000FT DURD. AWC-WEB/SWA</raw_text>
+    </AircraftReport>
+    <AircraftReport>
+      <receipt_time>2016-04-18T21:03:41Z</receipt_time>
+      <observation_time>2016-04-18T20:46:00Z</observation_time>
+      <aircraft_ref>E55P</aircraft_ref>
+      <latitude>40.2292</latitude>
+      <longitude>-81.4765</longitude>
+      <altitude_ft_msl>45000</altitude_ft_msl>
+      <turbulence_condition turbulence_type="CHOP" turbulence_intensity="LGT" turbulence_base_ft_msl="45000" />
+      <report_type>PIREP</report_type>
+      <raw_text>ZZV UA /OV CTW/TM 2046/FL450/TP E55P/TB LGT CHOP 450/RM CONSTANT CHOP</raw_text>
+    </AircraftReport>
+    <AircraftReport>
+      <receipt_time>2016-04-18T21:03:40Z</receipt_time>
+      <observation_time>2016-04-18T20:45:00Z</observation_time>
+      <aircraft_ref>B737</aircraft_ref>
+      <latitude>39.8719</latitude>
+      <longitude>-84.0431</longitude>
+      <altitude_ft_msl>39000</altitude_ft_msl>
+      <turbulence_condition turbulence_type="CHOP" turbulence_intensity="LGT" turbulence_base_ft_msl="39000" />
+      <report_type>PIREP</report_type>
+      <raw_text>DAY UA /OV ROD180025/TM 2045/FL390/TP B737/TB LGT CHOP 390/RM CONSTANT CHOP</raw_text>
+    </AircraftReport>
+    <AircraftReport>
+      <receipt_time>2016-04-18T21:03:40Z</receipt_time>
+      <observation_time>2016-04-18T20:39:00Z</observation_time>
+      <aircraft_ref>C680</aircraft_ref>
+      <latitude>40.1444</latitude>
+      <longitude>-80.9571</longitude>
+      <altitude_ft_msl>43000</altitude_ft_msl>
+      <turbulence_condition turbulence_type="CHOP" turbulence_intensity="NEG" turbulence_base_ft_msl="43000" />
+      <report_type>PIREP</report_type>
+      <raw_text>ZZV UA /OV AIR320010/TM 2039/FL430/TP C680/TB NEG CHOP 430</raw_text>
+    </AircraftReport>
+    <AircraftReport>
+      <receipt_time>2016-04-18T21:03:40Z</receipt_time>
+      <observation_time>2016-04-18T20:37:00Z</observation_time>
+      <aircraft_ref>G150</aircraft_ref>
+      <latitude>40.1511</latitude>
+      <longitude>-82.5883</longitude>
+      <altitude_ft_msl>36000</altitude_ft_msl>
+      <turbulence_condition turbulence_type="CHOP" turbulence_intensity="LGT-MOD" turbulence_base_ft_msl="36000" />
+      <report_type>PIREP</report_type>
+      <raw_text>CMH UA /OV APE/TM 2037/FL360/TP G150/TB LGT-MOD CHOP 360</raw_text>
+    </AircraftReport>
+    <AircraftReport>
+      <receipt_time>2016-04-18T21:03:40Z</receipt_time>
+      <observation_time>2016-04-18T20:30:00Z</observation_time>
+      <aircraft_ref>B737</aircraft_ref>
+      <latitude>41.7667</latitude>
+      <longitude>-86.9877</longitude>
+      <altitude_ft_msl>36000</altitude_ft_msl>
+      <turbulence_condition turbulence_type="CHOP" turbulence_intensity="MOD" />
+      <report_type>PIREP</report_type>
+      <raw_text>SBN UA /OV GIJ270030/TM 2030/FL360/TP B737/TB MOD CHOP</raw_text>
+    </AircraftReport>
+    <AircraftReport>
+      <receipt_time>2016-04-18T20:52:54Z</receipt_time>
+      <observation_time>2016-04-18T20:20:00Z</observation_time>
+      <aircraft_ref>B738</aircraft_ref>
+      <latitude>40.7794</latitude>
+      <longitude>-86.4322</longitude>
+      <altitude_ft_msl>36000</altitude_ft_msl>
+      <turbulence_condition turbulence_type="CHOP" turbulence_intensity="LGT-MOD" />
+      <wx_string>HZ</wx_string>
+      <report_type>PIREP</report_type>
+      <raw_text>LAF UA /OV BVT065032/TM 2020/FL360/TP B738/WX HAZY/TB LGT-MOD/RM POCKET OF MODERATE CHOP AND CONT LGT CHOP</raw_text>
+    </AircraftReport>
+    <AircraftReport>
+      <receipt_time>2016-04-18T20:36:33Z</receipt_time>
+      <observation_time>2016-04-18T20:17:00Z</observation_time>
+      <aircraft_ref>E170</aircraft_ref>
+      <latitude>37.6318</latitude>
+      <longitude>-85.6759</longitude>
+      <altitude_ft_msl>34000</altitude_ft_msl>
+      <turbulence_condition turbulence_intensity="LGT-MOD" />
+      <report_type>PIREP</report_type>
+      <raw_text>SDF UA /OV EWO/TM 2017/FL340/TP E170/TB LGT-MOD</raw_text>
+    </AircraftReport>
+    <AircraftReport>
+      <receipt_time>2016-04-18T19:57:04Z</receipt_time>
+      <observation_time>2016-04-18T19:39:00Z</observation_time>
+      <aircraft_ref>UAL696</aircraft_ref>
+      <latitude>38.65</latitude>
+      <longitude>-84.3</longitude>
+      <altitude_ft_msl>34000</altitude_ft_msl>
+      <turbulence_condition turbulence_type="CHOP" turbulence_intensity="MOD" />
+      <turbulence_condition turbulence_intensity="NEG" turbulence_base_ft_msl="32000" />
+      <report_type>AIREP</report_type>
+      <raw_text>ARP UAL696 3839N 08418W 1939 F340 TB MOD CHOP 320 RM A320 OV FLM FL300 SMOOTH</raw_text>
+    </AircraftReport>
+    <AircraftReport>
+      <receipt_time>2016-04-18T19:51:51Z</receipt_time>
+      <observation_time>2016-04-18T19:28:00Z</observation_time>
+      <aircraft_ref>B752</aircraft_ref>
+      <latitude>40.3175</latitude>
+      <longitude>-82.5883</longitude>
+      <altitude_ft_msl>36000</altitude_ft_msl>
+      <turbulence_condition turbulence_type="CAT" turbulence_intensity="LGT-MOD" turbulence_base_ft_msl="36000" />
+      <report_type>PIREP</report_type>
+      <raw_text>CMH UA /OV APE360010/TM 1928/FL360/TP B752/TB LGT-MOD CAT 360</raw_text>
+    </AircraftReport>
+    <AircraftReport>
+      <receipt_time>2016-04-18T19:41:33Z</receipt_time>
+      <observation_time>2016-04-18T19:00:00Z</observation_time>
+      <aircraft_ref>C172</aircraft_ref>
+      <latitude>41.7063</latitude>
+      <longitude>-85.6488</longitude>
+      <altitude_ft_msl>5500</altitude_ft_msl>
+      <turbulence_condition turbulence_intensity="MOD" turbulence_freq="CONT" />
+      <icing_condition icing_intensity="NEGclr" icing_base_ft_msl="5500" />
+      <visibility_statute_mi>10</visibility_statute_mi>
+      <report_type>PIREP</report_type>
+      <raw_text>IRS UA /OV SBN090030/TM 1900/FL055/TP C172/WX FV10SM/TB CONS MOD</raw_text>
+    </AircraftReport>
+    <AircraftReport>
+      <receipt_time>2016-04-18T18:55:07Z</receipt_time>
+      <observation_time>2016-04-18T18:48:00Z</observation_time>
+      <quality_control_flags>
+        <bad_location>TRUE</bad_location>
+      </quality_control_flags>
+      <aircraft_ref>B737</aircraft_ref>
+      <latitude>39.9023</latitude>
+      <longitude>-84.2194</longitude>
+      <altitude_ft_msl>34000</altitude_ft_msl>
+      <turbulence_condition turbulence_type="CHOP" turbulence_intensity="MOD" />
+      <report_type>PIREP</report_type>
+      <raw_text>DAY UA /OV ROD21020/TM 1848/FL340/TP B737/TB MOD CHOP</raw_text>
+    </AircraftReport>
+    <AircraftReport>
+      <receipt_time>2016-04-18T18:43:56Z</receipt_time>
+      <observation_time>2016-04-18T18:41:00Z</observation_time>
+      <aircraft_ref>DH8C</aircraft_ref>
+      <latitude>43.4163</latitude>
+      <longitude>-79.9333</longitude>
+      <altitude_ft_msl>8000</altitude_ft_msl>
+      <turbulence_condition turbulence_type="CHOP" turbulence_intensity="MOD" />
+      <report_type>PIREP</report_type>
+      <raw_text>YZ UA /OV CYHM 000015 /TM 1841 /FL080 /TP DH8C /TB MDT /RM MDT CHOP</raw_text>
+    </AircraftReport>
+  </data>
+</response>
+
