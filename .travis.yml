@@ -4,6 +4,7 @@ notifications:
   email:
     on_success: never
     on_failure: change
+  hipchat: 7e725a98ef80bb82e81033bf6bb874@Code
 
 php:
   - 5.3
